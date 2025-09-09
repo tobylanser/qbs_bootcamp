@@ -1,0 +1,1112 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Data Wrangling I},
+  pdfauthor={QBS Bootcamp 2025},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Data Wrangling I}
+\author{QBS Bootcamp 2025}
+\date{}
+
+\begin{document}
+\maketitle
+
+\subsubsection{Lesson Objectives}\label{lesson-objectives}
+
+\subparagraph{At the end of this lecture you should be able
+to:}\label{at-the-end-of-this-lecture-you-should-be-able-to}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Generate random data
+\item
+  Derive new variables and subset data frames based on your existing
+  data
+\item
+  Move between long and wide formatted data
+\item
+  Produce basic boxplots and scatter plots using ggpubr
+\item
+  Perform basic manipulation of character strings
+\end{enumerate}
+
+\subsubsection{Resources}\label{resources}
+
+Overview of ggpubr: \url{https://rpkgs.datanovia.com/ggpubr/}
+
+Examples of reshape2 package:
+\url{https://seananderson.ca/2013/10/19/reshape/}
+
+Wide vs long data frames:
+\url{https://www.youtube.com/watch?v=pHPgMNXyzqc} \(~\)
+
+\subsubsection{Generating Random Data}\label{generating-random-data}
+
+For this lecture, we will start by generating a new data set. To
+generate random variables, we can use the \emph{rnorm} and \emph{rbinom}
+functions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define a variable of random systolic blood pressure}
+\FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{,}\AttributeTok{mean =} \FloatTok{128.4}\NormalTok{,}\AttributeTok{sd =} \FloatTok{19.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 128.5551 126.4302 131.5658 131.0775 117.4854 146.0162 105.4042 117.4629
+##  [9] 155.6464 171.2996
+\end{verbatim}
+
+Did you get the same values as me? Why or why not?
+
+\(~\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{,}\AttributeTok{mean =} \FloatTok{128.4}\NormalTok{,}\AttributeTok{sd =} \FloatTok{19.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 117.4147 123.8885 158.9507 129.7820 130.9340 162.0153 137.4340 103.6048
+##  [9] 114.9377 119.6650
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{,}\AttributeTok{mean =} \FloatTok{128.4}\NormalTok{,}\AttributeTok{sd =} \FloatTok{19.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 152.3920 135.4524 136.2551 130.5694 117.5055 163.4235 138.1579  89.8543
+##  [9] 142.1466 119.1333
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{,}\AttributeTok{mean =} \FloatTok{128.4}\NormalTok{,}\AttributeTok{sd =} \FloatTok{19.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 117.4147 123.8885 158.9507 129.7820 130.9340 162.0153 137.4340 103.6048
+##  [9] 114.9377 119.6650
+\end{verbatim}
+
+What do you think the set seed function does?
+
+\(~\)
+
+Many functions in R incorporate some level of randomization such as
+sampling, some clustering algorithms, and some plotting functions.
+Always be aware of if you are using randomization, and always ensure
+that your code and results are reproducible by using the
+\emph{set.seed()} function.
+
+\(~\)
+
+Now let's generate a random binary variable
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{103}\NormalTok{)}
+\FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{,}\AttributeTok{size =} \DecValTok{1}\NormalTok{,}\AttributeTok{prob =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0 0 1 1 0 0 0 0 0 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{,}\AttributeTok{size =} \DecValTok{10}\NormalTok{,}\AttributeTok{prob =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 5 4 6 6 7 3 3 4 4 4
+\end{verbatim}
+
+What does the ``size'' parameter change? If we were creating a binary
+variable like biological sex, what would you set it as?
+
+\(~\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{103}\NormalTok{)}
+\FunctionTok{mean}\NormalTok{(}\FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{100}\NormalTok{,}\AttributeTok{size =} \DecValTok{10}\NormalTok{,}\AttributeTok{prob =} \FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(}\FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{100}\NormalTok{,}\AttributeTok{size =} \DecValTok{10}\NormalTok{,}\AttributeTok{prob =} \FloatTok{0.7}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.93
+\end{verbatim}
+
+What does the ``prob'' parameter change? When might you use different
+values here?
+
+\(~\)
+
+Okay now lets build a toy data set
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set a random seed}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{103}\NormalTok{) }
+
+\CommentTok{\# Define a data frame with our randomly generated data}
+\NormalTok{randomData }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}SubjectID\textquotesingle{}} \OtherTok{=} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{), }
+                         \StringTok{\textquotesingle{}systolicBP\textquotesingle{}} \OtherTok{=} \FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{,}\AttributeTok{mean =} \DecValTok{128}\NormalTok{,}\AttributeTok{sd =} \DecValTok{20}\NormalTok{),}
+                         \StringTok{\textquotesingle{}diastolicBP\textquotesingle{}} \OtherTok{=} \FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{,}\AttributeTok{mean =} \DecValTok{71}\NormalTok{,}\AttributeTok{sd =} \DecValTok{10}\NormalTok{),}
+                         \StringTok{\textquotesingle{}Age\textquotesingle{}} \OtherTok{=} \FunctionTok{trunc}\NormalTok{(}\FunctionTok{runif}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{,}\AttributeTok{min =} \DecValTok{18}\NormalTok{,}\AttributeTok{max =} \DecValTok{70}\NormalTok{)),}
+                         \StringTok{\textquotesingle{}Male\textquotesingle{}} \OtherTok{=} \FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{,}\AttributeTok{size =} \DecValTok{1}\NormalTok{,}\AttributeTok{prob =} \FloatTok{0.5}\NormalTok{))}
+
+\CommentTok{\# Take a peak at the top entries for our dataset }
+\FunctionTok{head}\NormalTok{(randomData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   SubjectID systolicBP diastolicBP Age Male
+## 1         1  112.28054    75.52894  52    0
+## 2         2  129.09478    59.95778  56    0
+## 3         3  104.54879    74.51568  25    1
+## 4         4  124.65374    52.99577  41    0
+## 5         5   90.69937    71.17388  41    0
+## 6         6  125.59120    69.50961  31    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Assess the mean and standard deviation for systolic blood pressure}
+\FunctionTok{mean}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{systolicBP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 128.4313
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{systolicBP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 19.37998
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Visualize the distribution of diastolic blood pressure}
+\FunctionTok{hist}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{diastolicBP,}\AttributeTok{main =} \StringTok{\textquotesingle{}Randomly Generated Data\textquotesingle{}}\NormalTok{,}\AttributeTok{xlab =} \StringTok{\textquotesingle{}Diastolic Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-5-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Visualize the distribution of age}
+\FunctionTok{hist}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{Age,}\AttributeTok{main =} \StringTok{\textquotesingle{}Randomly Generated Data\textquotesingle{}}\NormalTok{,}\AttributeTok{xlab =} \StringTok{\textquotesingle{}Age (years)\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-5-2.pdf}}
+
+What differences do you notice in the distribution of these two
+variables?
+
+\(~\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check the distribution of our variables}
+\FunctionTok{summary}\NormalTok{(randomData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    SubjectID        systolicBP      diastolicBP         Age       
+##  Min.   :   1.0   Min.   : 67.48   Min.   :43.07   Min.   :18.00  
+##  1st Qu.: 250.8   1st Qu.:115.12   1st Qu.:64.15   1st Qu.:29.75  
+##  Median : 500.5   Median :127.77   Median :70.67   Median :44.00  
+##  Mean   : 500.5   Mean   :128.43   Mean   :70.99   Mean   :43.54  
+##  3rd Qu.: 750.2   3rd Qu.:141.24   3rd Qu.:78.02   3rd Qu.:56.00  
+##  Max.   :1000.0   Max.   :207.49   Max.   :98.99   Max.   :69.00  
+##       Male      
+##  Min.   :0.000  
+##  1st Qu.:0.000  
+##  Median :1.000  
+##  Mean   :0.525  
+##  3rd Qu.:1.000  
+##  Max.   :1.000
+\end{verbatim}
+
+Is it summarizing the factor variable the way we want? Why or why not?
+
+\(~\)
+
+\subsubsection{Deriving New Variables}\label{deriving-new-variables}
+
+Lets try converting the binary variable to a more logical format
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define a new factor variable from an old binary}
+\NormalTok{randomData}\SpecialCharTok{$}\NormalTok{BiologicalSex }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{Male }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,}\StringTok{\textquotesingle{}Male\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Female\textquotesingle{}}\NormalTok{))}
+
+\CommentTok{\# Re{-}check the distribution of our variables}
+\FunctionTok{summary}\NormalTok{(randomData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    SubjectID        systolicBP      diastolicBP         Age       
+##  Min.   :   1.0   Min.   : 67.48   Min.   :43.07   Min.   :18.00  
+##  1st Qu.: 250.8   1st Qu.:115.12   1st Qu.:64.15   1st Qu.:29.75  
+##  Median : 500.5   Median :127.77   Median :70.67   Median :44.00  
+##  Mean   : 500.5   Mean   :128.43   Mean   :70.99   Mean   :43.54  
+##  3rd Qu.: 750.2   3rd Qu.:141.24   3rd Qu.:78.02   3rd Qu.:56.00  
+##  Max.   :1000.0   Max.   :207.49   Max.   :98.99   Max.   :69.00  
+##       Male       BiologicalSex
+##  Min.   :0.000   Female:475   
+##  1st Qu.:0.000   Male  :525   
+##  Median :1.000                
+##  Mean   :0.525                
+##  3rd Qu.:1.000                
+##  Max.   :1.000
+\end{verbatim}
+
+\(~\)
+
+We can also generate a new binary variable from a continuous variable
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define variable specifying age above 65 (medicare eligible)}
+\NormalTok{randomData}\SpecialCharTok{$}\NormalTok{MedicareAge }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{Age }\SpecialCharTok{\textless{}} \DecValTok{65}\NormalTok{,F,T)}
+
+\CommentTok{\# Re{-}check the distribution of our variables}
+\FunctionTok{summary}\NormalTok{(randomData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    SubjectID        systolicBP      diastolicBP         Age       
+##  Min.   :   1.0   Min.   : 67.48   Min.   :43.07   Min.   :18.00  
+##  1st Qu.: 250.8   1st Qu.:115.12   1st Qu.:64.15   1st Qu.:29.75  
+##  Median : 500.5   Median :127.77   Median :70.67   Median :44.00  
+##  Mean   : 500.5   Mean   :128.43   Mean   :70.99   Mean   :43.54  
+##  3rd Qu.: 750.2   3rd Qu.:141.24   3rd Qu.:78.02   3rd Qu.:56.00  
+##  Max.   :1000.0   Max.   :207.49   Max.   :98.99   Max.   :69.00  
+##       Male       BiologicalSex MedicareAge    
+##  Min.   :0.000   Female:475    Mode :logical  
+##  1st Qu.:0.000   Male  :525    FALSE:903      
+##  Median :1.000                 TRUE :97       
+##  Mean   :0.525                                
+##  3rd Qu.:1.000                                
+##  Max.   :1.000
+\end{verbatim}
+
+\subsubsection{Subsetting Data}\label{subsetting-data}
+
+As we learned in a previous lecture, we can subset a data frame in a few
+ways
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Subset to only those at medicare age}
+\NormalTok{medicareData1 }\OtherTok{\textless{}{-}}\NormalTok{ randomData[}\FunctionTok{which}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{MedicareAge }\SpecialCharTok{==}\NormalTok{ T),]}
+\NormalTok{medicareData2 }\OtherTok{\textless{}{-}}\NormalTok{ randomData[}\FunctionTok{which}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{Age }\SpecialCharTok{\textgreater{}=} \DecValTok{65}\NormalTok{),]}
+
+\CommentTok{\# We can use the following statement to ensure both methods produced the same result}
+\FunctionTok{all}\NormalTok{(medicareData1 }\SpecialCharTok{==}\NormalTok{ medicareData2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(medicareData1 }\SpecialCharTok{==}\NormalTok{ medicareData2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## TRUE 
+##  679
+\end{verbatim}
+
+\(~\)
+
+Now we can look at the distribution in diastolic blood pressure just
+among individuals meeting a given age cutoff
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Visualize the distribution of diastolic blood pressure in Medicare Only}
+\FunctionTok{hist}\NormalTok{(medicareData1}\SpecialCharTok{$}\NormalTok{diastolicBP,}\AttributeTok{main =} \StringTok{\textquotesingle{}Randomly Generated Data: Medicare Eligible Only\textquotesingle{}}\NormalTok{,}\AttributeTok{xlab =} \StringTok{\textquotesingle{}Diastolic Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-10-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Visualize the distribution of diastolic blood pressure in full dataset}
+\FunctionTok{hist}\NormalTok{(randomData}\SpecialCharTok{$}\NormalTok{diastolicBP,}\AttributeTok{main =} \StringTok{\textquotesingle{}Randomly Generated Data: Full Cohort\textquotesingle{}}\NormalTok{,}\AttributeTok{xlab =} \StringTok{\textquotesingle{}Diastolic Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-10-2.pdf}}
+
+Does the distribution in the subsetted data look any different than in
+the full data set? Should it?
+
+\subsubsection{\texorpdfstring{Basic Plotting Using
+\emph{ggpubr}}{Basic Plotting Using ggpubr}}\label{basic-plotting-using-ggpubr}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Run the following line of code one time to install the package if you haven\textquotesingle{}t already}
+\CommentTok{\# install.packages(\textquotesingle{}ggpubr\textquotesingle{})}
+
+\CommentTok{\# Generate a scatter plot of age by systolic blood pressure}
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggscatter}\NormalTok{(randomData,}\AttributeTok{x =} \StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\AttributeTok{y =} \StringTok{\textquotesingle{}systolicBP\textquotesingle{}}\NormalTok{,}\AttributeTok{ylab =} \StringTok{\textquotesingle{}Systolic Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-11-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate a boxplot for diastolic blood pressure distrubition by biological sex in our original dataset}
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggboxplot}\NormalTok{(randomData,}\AttributeTok{x =} \StringTok{\textquotesingle{}BiologicalSex\textquotesingle{}}\NormalTok{,}\AttributeTok{y =} \StringTok{\textquotesingle{}systolicBP\textquotesingle{}}\NormalTok{,}\AttributeTok{xlab =} \StringTok{\textquotesingle{}Biological Sex\textquotesingle{}}\NormalTok{,}
+                  \AttributeTok{ylab =} \StringTok{\textquotesingle{}Systolic Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{,}\AttributeTok{add =} \StringTok{\textquotesingle{}jitter\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-11-2.pdf}}
+
+Was there any visual association between age or sex and blood pressure?
+
+Would we expect there to be based on how we generated the data?
+
+\(~\)
+
+We can also use \textbf{ggarrange} to organize plots in a grid.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggarrange}\NormalTok{(}
+\NormalTok{   ggpubr}\SpecialCharTok{::}\FunctionTok{ggscatter}\NormalTok{(randomData,}\AttributeTok{x =} \StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\AttributeTok{y =} \StringTok{\textquotesingle{}systolicBP\textquotesingle{}}\NormalTok{,}
+                     \AttributeTok{xlab =} \StringTok{\textquotesingle{}Age (yrs)\textquotesingle{}}\NormalTok{,}\AttributeTok{ylab =} \StringTok{\textquotesingle{}Systolic Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{),}
+\NormalTok{   ggpubr}\SpecialCharTok{::}\FunctionTok{ggboxplot}\NormalTok{(randomData,}\AttributeTok{x =} \StringTok{\textquotesingle{}BiologicalSex\textquotesingle{}}\NormalTok{,}\AttributeTok{y =} \StringTok{\textquotesingle{}systolicBP\textquotesingle{}}\NormalTok{,}
+                     \AttributeTok{xlab =} \StringTok{\textquotesingle{}Biological Sex\textquotesingle{}}\NormalTok{,}\AttributeTok{ylab =} \StringTok{\textquotesingle{}Systolic Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{),}
+   \AttributeTok{ncol =} \DecValTok{2}\NormalTok{,}\AttributeTok{nrow =} \DecValTok{1}\CommentTok{\#,labels = \textquotesingle{}auto\textquotesingle{}}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-12-1.pdf}}
+
+\(~\)
+
+What if we want to look at systolic and diastolic blood pressure in the
+same plot? To do this, we need to convert out data to a long format.
+
+\subsubsection{Wide vs Long Dataframes}\label{wide-vs-long-dataframes}
+
+\textbf{Wide} format data will have each subject in a single row and
+then multiple measures related to that subject in a unique column.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Wide format data}
+\FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}PatientID\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}P001\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P002\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P003\textquotesingle{}}\NormalTok{),}
+                          \StringTok{\textquotesingle{}Age\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{24}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{27}\NormalTok{),}
+                          \StringTok{\textquotesingle{}Height.in\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{67}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{64}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   PatientID Age Height.in
+## 1      P001  24        67
+## 2      P002  35        70
+## 3      P003  27        64
+\end{verbatim}
+
+\textbf{Long} format data will have each measurement in a new row.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Long format data}
+\FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}PatientID\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}P001\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P001\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P002\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P002\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P003\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P003\textquotesingle{}}\NormalTok{),}
+           \StringTok{\textquotesingle{}Measure\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Height.in\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Height.in\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Height.in\textquotesingle{}}\NormalTok{),}
+           \StringTok{\textquotesingle{}Value\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{24}\NormalTok{,}\DecValTok{67}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{27}\NormalTok{,}\DecValTok{64}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   PatientID   Measure Value
+## 1      P001       Age    24
+## 2      P001 Height.in    67
+## 3      P002       Age    35
+## 4      P002 Height.in    70
+## 5      P003       Age    27
+## 6      P003 Height.in    64
+\end{verbatim}
+
+While this might seem odd for this type of use case, it is a very useful
+tool for data sets with \textbf{repeated measures}, i.e.~measurements
+taken over time like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Wide format repeated measures}
+\FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}PatientID\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}P001\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P002\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P003\textquotesingle{}}\NormalTok{),}
+           \StringTok{\textquotesingle{}Height.in.5y\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{,}\DecValTok{43}\NormalTok{,}\DecValTok{39}\NormalTok{),}
+           \StringTok{\textquotesingle{}Height.in.10y\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{53}\NormalTok{,}\DecValTok{58}\NormalTok{,}\DecValTok{51}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   PatientID Height.in.5y Height.in.10y
+## 1      P001           40            53
+## 2      P002           43            58
+## 3      P003           39            51
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Long format repeated measures}
+\FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}PatientID\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}P001\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P001\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P002\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P002\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P003\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}P003\textquotesingle{}}\NormalTok{),}
+           \StringTok{\textquotesingle{}Age.yrs\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{),}
+           \StringTok{\textquotesingle{}Height.in\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{,}\DecValTok{53}\NormalTok{,}\DecValTok{43}\NormalTok{,}\DecValTok{58}\NormalTok{,}\DecValTok{39}\NormalTok{,}\DecValTok{51}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   PatientID Age.yrs Height.in
+## 1      P001       5        40
+## 2      P001      10        53
+## 3      P002       5        43
+## 4      P002      10        58
+## 5      P003       5        39
+## 6      P003      10        51
+\end{verbatim}
+
+\subsubsection{Long Format Data}\label{long-format-data}
+
+Currently, our data is in a \textbf{wide} format because each subject is
+only in a single row and all measures from that subject are in columns.
+There are a few different ways to convert between wide an long format
+data.
+
+To achieve this today, we will use the \emph{melt} function from the
+package \emph{reshape2}. Next class, we will discuss how to achieve this
+in \emph{tidyverse}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Run the following line of code one time to install the package if you haven\textquotesingle{}t already}
+\CommentTok{\# install.packages(\textquotesingle{}reshape2\textquotesingle{})}
+
+\CommentTok{\# Melt the data frame into a long form}
+\NormalTok{longData }\OtherTok{\textless{}{-}}\NormalTok{ reshape2}\SpecialCharTok{::}\FunctionTok{melt}\NormalTok{(randomData[,}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}SubjectID\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}systolicBP\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}diastolicBP\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}BiologicalSex\textquotesingle{}}\NormalTok{)],}
+                           \AttributeTok{id.vars =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}SubjectID\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}BiologicalSex\textquotesingle{}}\NormalTok{),}\AttributeTok{value.name =} \StringTok{\textquotesingle{}BP\textquotesingle{}}\NormalTok{,}
+                           \AttributeTok{variable.name =} \StringTok{\textquotesingle{}BP.Type\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# Check enteries for our first subject}
+\NormalTok{longData[longData}\SpecialCharTok{$}\NormalTok{SubjectID }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      SubjectID Age BiologicalSex     BP.Type        BP
+## 1            1  52        Female  systolicBP 112.28054
+## 1001         1  52        Female diastolicBP  75.52894
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How it would look if we forgot one of our ID variables}
+\NormalTok{longData2 }\OtherTok{\textless{}{-}}\NormalTok{ reshape2}\SpecialCharTok{::}\FunctionTok{melt}\NormalTok{(randomData[,}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}SubjectID\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}systolicBP\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}diastolicBP\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}BiologicalSex\textquotesingle{}}\NormalTok{)],}
+                           \AttributeTok{id.vars =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}SubjectID\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{),}\AttributeTok{value.name =} \StringTok{\textquotesingle{}BP\textquotesingle{}}\NormalTok{,}
+                           \AttributeTok{variable.name =} \StringTok{\textquotesingle{}BP.Type\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: attributes are not identical across measure variables; they will be
+## dropped
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(longData2}\SpecialCharTok{$}\NormalTok{BP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{longData2[longData2}\SpecialCharTok{$}\NormalTok{SubjectID }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      SubjectID Age       BP.Type               BP
+## 1            1  52    systolicBP 112.280536472035
+## 1001         1  52   diastolicBP 75.5289415224527
+## 2001         1  52 BiologicalSex           Female
+\end{verbatim}
+
+\(~\)
+
+We can also use the \emph{order} function to ensure that all our
+subjects values are listed in sequence in the table or to look at
+subjects who have the oldest age easily
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print first 20 values}
+\NormalTok{longData}\SpecialCharTok{$}\NormalTok{Age[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 52 56 25 41 41 31 69 67 46 60 36 56 40 39 38 52 52 60 20 61
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{order}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{Age)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   35  121  158  214  237  337  342  350  594  616  653  656  717  736  739
+## [16]  846  976  991 1035 1121
+\end{verbatim}
+
+What does the \emph{order} function return?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{longData}\SpecialCharTok{$}\NormalTok{Age[}\DecValTok{14}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 39
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{longData[}\FunctionTok{order}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{Age),}\StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{][}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18
+\end{verbatim}
+
+\(~\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Order by subject ID}
+\FunctionTok{head}\NormalTok{(longData[}\FunctionTok{order}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{SubjectID,}\AttributeTok{decreasing =}\NormalTok{ F),])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      SubjectID Age BiologicalSex     BP.Type        BP
+## 1            1  52        Female  systolicBP 112.28054
+## 1001         1  52        Female diastolicBP  75.52894
+## 2            2  56        Female  systolicBP 129.09478
+## 1002         2  56        Female diastolicBP  59.95778
+## 3            3  25          Male  systolicBP 104.54879
+## 1003         3  25          Male diastolicBP  74.51568
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Order by decreasing age}
+\FunctionTok{head}\NormalTok{(longData[}\FunctionTok{order}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{Age,}\AttributeTok{decreasing =}\NormalTok{ T),])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     SubjectID Age BiologicalSex    BP.Type       BP
+## 7           7  69        Female systolicBP 144.5196
+## 114       114  69          Male systolicBP 119.9431
+## 124       124  69        Female systolicBP 140.5145
+## 336       336  69          Male systolicBP 115.8081
+## 363       363  69        Female systolicBP 139.2851
+## 391       391  69          Male systolicBP 119.4529
+\end{verbatim}
+
+\(~\) The order function can be particularly helpful when trying to
+merge two data frames and want to first ensure that subjects or samples
+are in the same order in each data frame.
+
+\subsubsection{Manipulating Character
+Strings}\label{manipulating-character-strings}
+
+If we don't like the end of systolic and diastolic labels having ``BP''
+we can remove it using the \emph{sub} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Look for cases of "BP" and replace with ""}
+\NormalTok{longData}\SpecialCharTok{$}\NormalTok{BP.Type }\OtherTok{\textless{}{-}} \FunctionTok{sub}\NormalTok{(}\AttributeTok{pattern =} \StringTok{\textquotesingle{}BP\textquotesingle{}}\NormalTok{,}\AttributeTok{replacement =} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{,}\AttributeTok{x =}\NormalTok{ longData}\SpecialCharTok{$}\NormalTok{BP.Type)}
+
+\CommentTok{\# Now lets see what values we have for this variable}
+\FunctionTok{table}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{BP.Type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## diastolic  systolic 
+##      1000      1000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# We could also just replace the values using indexing as follows}
+\NormalTok{longData[}\FunctionTok{which}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{BP.Type }\SpecialCharTok{==} \StringTok{\textquotesingle{}systolic\textquotesingle{}}\NormalTok{),}\StringTok{\textquotesingle{}BP.Type\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Systolic\textquotesingle{}}
+\NormalTok{longData[}\FunctionTok{which}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{BP.Type }\SpecialCharTok{==} \StringTok{\textquotesingle{}diastolic\textquotesingle{}}\NormalTok{),}\StringTok{\textquotesingle{}BP.Type\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Diastolic\textquotesingle{}}
+
+\CommentTok{\# Now lets check again what values we have for this variable}
+\FunctionTok{table}\NormalTok{(longData}\SpecialCharTok{$}\NormalTok{BP.Type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Diastolic  Systolic 
+##      1000      1000
+\end{verbatim}
+
+\emph{sub} and \emph{gsub} can both be used to search and replace in
+character strings. Can you identify the difference between what each one
+does?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define a list of character strings}
+\NormalTok{charStrings }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}QBS Graduate Program at Dartmouth College\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}QBS 103\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}QBS! QBS! QBS!\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# sub function}
+\FunctionTok{sub}\NormalTok{(}\AttributeTok{pattern =} \StringTok{\textquotesingle{}QBS\textquotesingle{}}\NormalTok{,}\AttributeTok{replacement =} \StringTok{\textquotesingle{}Dartmouth\textquotesingle{}}\NormalTok{,}\AttributeTok{x =}\NormalTok{ charStrings)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Dartmouth Graduate Program at Dartmouth College"
+## [2] "Dartmouth 103"                                  
+## [3] "Dartmouth! QBS! QBS!"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# gsub function}
+\FunctionTok{gsub}\NormalTok{(}\AttributeTok{pattern =} \StringTok{\textquotesingle{}QBS\textquotesingle{}}\NormalTok{,}\AttributeTok{replacement =} \StringTok{\textquotesingle{}Dartmouth\textquotesingle{}}\NormalTok{,}\AttributeTok{x =}\NormalTok{ charStrings)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Dartmouth Graduate Program at Dartmouth College"
+## [2] "Dartmouth 103"                                  
+## [3] "Dartmouth! Dartmouth! Dartmouth!"
+\end{verbatim}
+
+\(~\)
+
+This may seem easy enough to do on your own, but sometimes you will have
+large lists of character strings between two dataframes that have been
+entered in different formats.
+
+Here, I have 2 lists of sample IDs that I need to make sure are in the
+same order in both lists but you can see, they are formatted differently
+across both lists.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define two lists of sample names}
+\NormalTok{d1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}20210323\_PB4\_01\_09.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210323\_PB4\_01\_11.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210323\_PB4\_01\_12.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401\_ch5{-}040121\_01\_01.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401\_ch5{-}040121\_01\_02.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401\_ch5{-}040121\_01\_02.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401\_ch5{-}040121\_01\_03.RCC\textquotesingle{}}\NormalTok{)}
+\NormalTok{d2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}20210323{-}PB4\_01\_11.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210323{-}PB4\_01\_12.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210323{-}PB4\_01\_09.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401{-}ch5{-}040121{-}01{-}01.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401{-}ch5{-}040121{-}01{-}02.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401{-}ch5{-}040121{-}01{-}02.RCC\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}20210401{-}ch5{-}040121{-}01{-}03.RCC\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Check if same samples are in both lists}
+\FunctionTok{table}\NormalTok{(d1 }\SpecialCharTok{\%in\%}\NormalTok{ d2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## FALSE 
+##     7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compare formatting }
+\FunctionTok{head}\NormalTok{(d1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "20210323_PB4_01_09.RCC"        "20210323_PB4_01_11.RCC"       
+## [3] "20210323_PB4_01_12.RCC"        "20210401_ch5-040121_01_01.RCC"
+## [5] "20210401_ch5-040121_01_02.RCC" "20210401_ch5-040121_01_02.RCC"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(d2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "20210323-PB4_01_11.RCC"        "20210323-PB4_01_12.RCC"       
+## [3] "20210323-PB4_01_09.RCC"        "20210401-ch5-040121-01-01.RCC"
+## [5] "20210401-ch5-040121-01-02.RCC" "20210401-ch5-040121-01-02.RCC"
+\end{verbatim}
+
+\(~\) We can change the formatting using \emph{gsub}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Replace all "\_" with "{-}" in list of sample names}
+\NormalTok{d1 }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(d1,}\AttributeTok{pattern =} \StringTok{\textquotesingle{}\_\textquotesingle{}}\NormalTok{,}\AttributeTok{replacement =} \StringTok{\textquotesingle{}{-}\textquotesingle{}}\NormalTok{)}
+\NormalTok{d2 }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(d2,}\AttributeTok{pattern =} \StringTok{\textquotesingle{}\_\textquotesingle{}}\NormalTok{,}\AttributeTok{replacement =} \StringTok{\textquotesingle{}{-}\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Verify all names in d1 are now also in d2}
+\FunctionTok{table}\NormalTok{(d1 }\SpecialCharTok{\%in\%}\NormalTok{ d2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## TRUE 
+##    7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check if D1 and D2 are in the same order}
+\FunctionTok{table}\NormalTok{(d1 }\SpecialCharTok{==}\NormalTok{ d2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## FALSE  TRUE 
+##     3     4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Reorder both vectors}
+\NormalTok{d1 }\OtherTok{\textless{}{-}}\NormalTok{ d1[}\FunctionTok{order}\NormalTok{(d1)]}
+\NormalTok{d2 }\OtherTok{\textless{}{-}}\NormalTok{ d2[}\FunctionTok{order}\NormalTok{(d2)]}
+
+\CommentTok{\# Check if D1 and D2 are in the same order}
+\FunctionTok{table}\NormalTok{(d1 }\SpecialCharTok{==}\NormalTok{ d2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## TRUE 
+##    7
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Adding Color to Our \emph{ggpubr}
+Plots}{Adding Color to Our ggpubr Plots}}\label{adding-color-to-our-ggpubr-plots}
+
+Now we can go back and generate out plots with both measures of blood
+pressure in one plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate a scatter plot of age by systolic blood pressure}
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggscatter}\NormalTok{(longData,}\AttributeTok{x =} \StringTok{\textquotesingle{}Age\textquotesingle{}}\NormalTok{,}\AttributeTok{y =} \StringTok{\textquotesingle{}BP\textquotesingle{}}\NormalTok{,}\AttributeTok{color =} \StringTok{\textquotesingle{}BP.Type\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-25-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate a boxplot for diastolic blood pressure distrubition by biological sex in our original dataset}
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggboxplot}\NormalTok{(longData,}\AttributeTok{x =} \StringTok{\textquotesingle{}BP.Type\textquotesingle{}}\NormalTok{,}\AttributeTok{y =} \StringTok{\textquotesingle{}BP\textquotesingle{}}\NormalTok{,}\AttributeTok{color =} \StringTok{\textquotesingle{}BiologicalSex\textquotesingle{}}\NormalTok{,}
+                  \AttributeTok{ylab =} \StringTok{\textquotesingle{}Blood Pressure (mmHg)\textquotesingle{}}\NormalTok{,}\AttributeTok{xlab =} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DataWranglingI_StudentVersion_files/figure-latex/unnamed-chunk-25-2.pdf}}
+
+\subsubsection{Converting Back to Wide Format
+Data}\label{converting-back-to-wide-format-data}
+
+We can also change our data back into a \textbf{wide} format using the
+\emph{cast} function as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Cast into a data frame}
+\NormalTok{wideData }\OtherTok{\textless{}{-}}\NormalTok{ reshape2}\SpecialCharTok{::}\FunctionTok{dcast}\NormalTok{(longData,}\AttributeTok{formula =}\NormalTok{  SubjectID }\SpecialCharTok{+}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ BiologicalSex }\SpecialCharTok{\textasciitilde{}}\NormalTok{ BP.Type,}\AttributeTok{value.var =} \StringTok{"BP"}\NormalTok{)}
+\CommentTok{\# Note: using dcast because we want a dataframe as output. }
+\CommentTok{\# If we want a vector or matrix as output, we use acast}
+
+\CommentTok{\# Lets see if our data look the same as when we started}
+\FunctionTok{head}\NormalTok{(wideData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   SubjectID Age BiologicalSex Diastolic  Systolic
+## 1         1  52        Female  75.52894 112.28054
+## 2         2  56        Female  59.95778 129.09478
+## 3         3  25          Male  74.51568 104.54879
+## 4         4  41        Female  52.99577 124.65374
+## 5         5  41        Female  71.17388  90.69937
+## 6         6  31        Female  69.50961 125.59120
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Our original data set}
+\FunctionTok{head}\NormalTok{(randomData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   SubjectID systolicBP diastolicBP Age Male BiologicalSex MedicareAge
+## 1         1  112.28054    75.52894  52    0        Female       FALSE
+## 2         2  129.09478    59.95778  56    0        Female       FALSE
+## 3         3  104.54879    74.51568  25    1          Male       FALSE
+## 4         4  124.65374    52.99577  41    0        Female       FALSE
+## 5         5   90.69937    71.17388  41    0        Female       FALSE
+## 6         6  125.59120    69.50961  31    0        Female       FALSE
+\end{verbatim}
+
+We can also use the \emph{dcast} function to make summary values. For
+example, what if we wanted to known the average BP for males and females
+based on their age group.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate table (note here we drop subject ID from the formula)}
+\NormalTok{summaryTable }\OtherTok{\textless{}{-}}\NormalTok{ reshape2}\SpecialCharTok{::}\FunctionTok{dcast}\NormalTok{(longData,}\AttributeTok{formula =}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ BiologicalSex }\SpecialCharTok{\textasciitilde{}}\NormalTok{ BP.Type,}
+                                \AttributeTok{fun.aggregate =}\NormalTok{ mean,}\AttributeTok{value.var =} \StringTok{\textquotesingle{}BP\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Check the dimmensions }
+\FunctionTok{dim}\NormalTok{(summaryTable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 104   4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Look at the top enteries}
+\FunctionTok{head}\NormalTok{(summaryTable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Age BiologicalSex Diastolic Systolic
+## 1  18        Female  76.03626 119.5091
+## 2  18          Male  68.47743 118.7080
+## 3  19        Female  74.30795 135.8965
+## 4  19          Male  71.88793 124.2671
+## 5  20        Female  71.04246 123.8012
+## 6  20          Male  71.27133 127.4093
+\end{verbatim}
+
+We can also use this to tabulate how many observations there are for
+each category
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate table (note here we drop subject ID from the formula)}
+\NormalTok{summaryTable }\OtherTok{\textless{}{-}}\NormalTok{ reshape2}\SpecialCharTok{::}\FunctionTok{dcast}\NormalTok{(longData,}\AttributeTok{formula =}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ BiologicalSex }\SpecialCharTok{\textasciitilde{}}\NormalTok{ BP.Type,}
+                                \AttributeTok{fun.aggregate =}\NormalTok{ length,}\AttributeTok{value.var =} \StringTok{\textquotesingle{}BP\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Check the dimmensions }
+\FunctionTok{dim}\NormalTok{(summaryTable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 104   4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Look at the top enteries}
+\FunctionTok{head}\NormalTok{(summaryTable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Age BiologicalSex Diastolic Systolic
+## 1  18        Female        10       10
+## 2  18          Male         8        8
+## 3  19        Female         5        5
+## 4  19          Male         6        6
+## 5  20        Female         5        5
+## 6  20          Male         8        8
+\end{verbatim}
+
+\subsubsection{In Class Activity}\label{in-class-activity}
+
+Working in groups, define a new variable for hypertension in our
+original dataset (randomData). Here we will define hypertension as
+systolic blood pressure over 130 or a diastolic blood pressure over 80.
+Plot the distribution in age for individuals with and without
+hypertension using boxplots.
+
+Use the \emph{melt} function to generate boxplots of the distribution of
+systolic and diastolic blood pressure in hypertensive vs.~normotensive
+individuals (color should be based on hypertension status).
+
+Use the \emph{dcast} function to generate a table summarizing the mean
+age, systolic, and diastolic BP for males and females, separately, with
+and without hypertension. Your table should have 4 rows. Order your
+table output such that it lists values for normotensive individuals
+first and hypertensive individuals second.
+
+\end{document}

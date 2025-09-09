@@ -1,0 +1,266 @@
+---
+title: "Data Wrangling II"
+author: "QBS Bootcamp 2025"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lesson Objectives
+
+## At the end of this lecture you should be able to:
+1. Use pipes in dplyr 
+2. Subset data using dplyr
+3. Move between wide and long data frames in tidyr
+4. Generate simple summary tables
+
+## Resources
+
+Cheat Sheet for Functions in dplyr: https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+
+Pipes in tidyverse: https://style.tidyverse.org/pipes.html
+
+``` {r}
+# Install all tidyverse associated packages
+#install.packages('tidyverse')
+
+# If you only want to install the packages we will use in this lecture:
+#install.packages('dplyr')
+#install.packages('tidyr')
+
+# load tidyverse libraries
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+```
+
+# Data Set
+
+We're going to start this lecture by generating the same random data set that we used in the last lecture. As always, don't forget to set a random seed so that our data is comparable across lectures.
+
+``` {r}
+# Set a random seed
+set.seed(103)
+
+# Define a data frame with our randomly generated data
+randomData <- data.frame('SubjectID' = seq(1:1000), 
+                         'Systolic.BP' = rnorm(n = 1000,mean = 128,sd = 20),
+                         'Diastolic.BP' = rnorm(n = 1000,mean = 71,sd = 10),
+                         'Age' = trunc(runif(n = 1000,min = 18,max = 70)),
+                         'Male' = rbinom(n = 1000,size = 1,prob = 0.5))
+
+# Define binary variable for biological sex
+randomData$BiologicalSex <- factor(ifelse(randomData$Male == 1,'Male','Female'))
+
+# Define variable specifying age above 65 (medicare eligible)
+randomData$MedicareAge <- ifelse(randomData$Age < 65,F,T)
+
+head(randomData, 5)
+```
+
+# Pipes
+
+If you've looked at a lot of sample code online before, you've probably run into this syntax: **%>%**. This is a pipe! Pipes are used in tidyverse to keep code clean and prevent the defining of a lot of unnecessary intermediate variables. One of the main goals of this syntax is to keep a lot of white space in your code to help make it as readable as possible for anyone reading through your code. 
+
+Pipes will get more complex as we go through the lecture but first lets start of with something simple to start to see what they do. First, lets define a subset of our data that reflects only individuals eligible for medicare. Last lecture, we used the following syntax:
+
+``` {r}
+# Subset to only those at medicare age using our binary variable
+medicareData <- randomData[which(randomData$MedicareAge == T),]
+head(medicareData)
+
+# Subset to only those at medicare age using a continuous variable
+medicareData <- randomData[randomData$Age >= 65,]
+head(medicareData)
+```
+
+Now, we can generate the same data set using a pipe and the filter function in dplyr. 
+
+``` {r}
+# Subset without pipe
+medicareData <- filter(randomData, Age >= 65)
+
+head(medicareData)
+
+# Subset with a pipe
+medicareData <- randomData %>%
+  filter(Age >= 65)
+
+dim(medicareData)
+head(medicareData)
+```
+
+Based on the the use of the filter function above, can you describe the syntax of how a pipe works?
+
+Pipes might not seem too useful when we are only providing it a single function, but what if we want it to work through multiple steps? 
+
+``` {r}
+medicareData <- randomData %>%
+  dplyr::filter(Age >= 65) %>%
+  dplyr::select(SubjectID,Systolic.BP,Diastolic.BP,BiologicalSex,Age)
+
+head(medicareData)
+dim(medicareData)
+```
+
+What is the select function doing?
+
+``` {r}
+medicareData <- randomData %>%
+  filter(Age >= 65) %>%
+  select(SubjectID,Systolic.BP,Diastolic.BP,BiologicalSex,Age) %>%
+  mutate(MedicareID = row_number()) %>%
+  mutate(BP.Diff = Systolic.BP - Diastolic.BP)
+
+head(medicareData)
+#View(medicareData)
+```
+
+Based on these examples, what is the mutate function doing?
+
+# Wide -> Long Data in *tidyverse*
+
+Last class, we moved from a wide to a long data frame using the *melt* function in *reshape2*. 
+
+``` {r}
+# Melt the data frame into a long form
+longData <- reshape2::melt(randomData[,c('SubjectID','Systolic.BP','Diastolic.BP','Age','BiologicalSex')],
+                           id.vars = c('SubjectID','Age','BiologicalSex'), # columns to keep
+                           value.name = 'BP', # name of new value column
+                           variable.name = 'BP.Type') # name of new variable column
+
+head(randomData)
+head(longData)
+```
+
+In *dplyr*, we will use the the *gather* function or the *pivot_longer*.
+
+``` {r}
+# use gather()
+longData2 <- randomData %>%
+  tidyr::gather(Systolic.BP, Diastolic.BP, # columns we want to combine
+                key = BP.Type, # name of new column that contains variable names
+                value = BP) # name of new column that contains data points
+
+head(randomData)
+head(longData2)
+
+# use pivot_longer()
+longData3 <- randomData %>%
+  pivot_longer(cols = c(Systolic.BP,Diastolic.BP),
+               names_to = 'BP.Type', 
+               values_to = 'BP')
+
+head(longData3)
+```
+
+What is different about the syntax we used here vs. what we used in the last class?
+
+We can also use some more pipes to clean this up even more:
+
+``` {r dplyr}
+longData <- randomData %>%
+  # Convert to long format
+  tidyr::gather(key = BP.Type, 
+                value = BP,
+                c('Systolic.BP','Diastolic.BP')) %>%
+  # Split into two separate variables
+  tidyr::separate(col = BP.Type, 
+                  into = c('BP.Type','Bad.ID')) %>% # sep argument: default is split at first non-alpha numeric character
+  # Remove the bad ID variable
+  select(-Bad.ID) 
+  
+head(longData)
+```
+
+Now that our data is in a long format, we can generate plots with both measures of blood pressure in one plot.
+
+``` {r}
+# Generate a scatter plot of age by systolic blood pressure
+ggpubr::ggscatter(longData,
+                  x = 'Age',
+                  y = 'BP',
+                  color = 'BP.Type')
+
+# Generate a boxplot for diastolic blood pressure distribution by biological sex in our original dataset
+ggpubr::ggboxplot(longData,
+                  x = 'BP.Type',
+                  y = 'BP',
+                  color = 'BiologicalSex',
+                  ylab = 'Blood Pressure (mmHg)',
+                  xlab = '')
+```
+
+Take a minute and comment what each step of this pipe is doing.
+
+# Long -> Wide Data in *tidyverse*
+
+We can go back to a wide format in *tidyr* using the *spread* or *pivot_wider* function. 
+
+``` {r}
+# Convert using spread
+wideData1 <- longData %>%
+  tidyr::spread(key = BP.Type, # split by category
+                value = BP)
+
+head(wideData1)
+
+# Convert using pivot_wider
+wideData2 <- longData %>%
+  tidyr::pivot_wider(names_from = BP.Type,
+                     values_from = BP)
+
+head(wideData2)
+```
+
+And, just like in *reshape2* we can also create summary tables using the *group_by* and *summarise* functions.
+
+``` {r tidyr}
+summary <- longData %>%
+  tidyr::spread(key = BP.Type, value = BP) %>%
+  dplyr::mutate(MedicareAge = ifelse(Age >= 65,T,F)) %>%
+  dplyr::group_by(BiologicalSex,MedicareAge) %>%
+  dplyr::summarise(Mean.Age = mean(Age),Mean.Sys = mean(Systolic),Mean.Dias = mean(Diastolic))
+
+summary
+```
+
+# In Class Exercises
+
+## 1. Generate Random Data
+
+Generate a random data set (remember to set a random seed) of 10,000 pregnant women with the following characteristics:
+
+1. Age is uniformly distributed between 18 and 35 years old (Variable Name: Age).
+
+2. There is a probability of 0.5 that each mother is carrying a female infant (Variable Name: InfantSex). This variable should be formatted as a factor variable with levels "Male" and "Female"
+
+3. Define fasting glucose measures (Variable Name: Glucose1) as normally distributed. Mothers carrying a male infant have a mean score of 85 and a standard deviation of 6 mg/dL. Mothers carrying a female infant have a mean score of 80 and a standard deviation of 6 mg/dL. 
+ 
+4. Define 1 hour glucose measures (Variable Name: Glucose2) as normally distributed. Mothers carrying a male infant have a mean score of 165 and a standard deviation of 9 mg/dL. Mothers carrying a female infant have a mean score of 155 and a standard deviation of 9 mg/dL. 
+
+5. Define a summary variable for gestational diabetes (Variable Name: Diagnosis) which is "Gestational Diabetes" if either Glucose1 is higher than 95 or Glucose2 is higher than 180 and "Healthy" otherwise. 
+
+```{r}
+# code here
+```
+
+## 2. Summarize Random Data
+
+Generate a summary table including age, fasting glucose, and one hour glucose of all subjects by both disease status and infant sex.
+
+Your table should have 4 rows in the following order: Healthy & Female, Gestational Diabetes & Female, Healthy & Male, Gestational Diabetes & Male and should summarize mean age, mean and sd fasting glucose, and mean and sd one hour glucose.
+
+```{r}
+# code here
+```
+
+## 3. Visualize Data
+
+Generate a boxplot of the distribution of Glucose (y axis) for all subjects where timepoint is on the x-axis and the plot is colored by Diagnosis.  
+
+```{r}
+# code here
+```

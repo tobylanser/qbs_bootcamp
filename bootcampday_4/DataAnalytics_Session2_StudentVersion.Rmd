@@ -1,0 +1,247 @@
+---
+title: 'Data Analytics II'
+author: "QBS Bootcamp 2025"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### R Script Dependencies
+
+When organizing your code, sometimes it may be easier to define a function that you will be using across multiple scripts and then call it independently. We can do this using the *source* function in base R. 
+
+The source function will run through an entire R script and you will see all the generated variables and functions appear in your current R Environment. So, if you have a file with your saved functions, you can just run that file rather than defining the function in each R script that you need it in. 
+
+``` {r}
+# Generate random data
+set.seed(3927)
+randomData <- data.frame(Cont1 = rnorm(n = 1000,mean = 50,sd = 10),
+                         Cont2 = rnorm(n = 1000, mean = 23,sd = 2),
+                         Cont3 = rexp(n = 1000,rate = 0.25),
+                         Cat1 = factor(rbinom(n = 1000,size = 1,prob = 0.50),
+                                       labels = c(F,T)),
+                         Cat2 = factor(rbinom(n = 1000,size = 1,prob = 0.25),
+                                       labels = c(F,T)),
+                         Cat3 = factor(rbinom(n = 1000,size = 2,prob = 0.40),
+                                       labels = c('A','B','C')))
+
+# Define location of the file with the function on your computer
+source('TableOne.R')
+buildTableOne(data = randomData,varList = c('Cont1','Cont2','Cat1','Cont3','Cat2','Cat3'),
+              nonnormVars = 'Cont3',catVars = c('Cat1','Cat2','Cat3'))
+```
+
+### Correlation Plots
+
+For the remainder of today's class, we are going to use simulated extracellular vesicle (EV) miRNA data which you can download on canvas. This data is currently stored as raw counts from array data in a 798x25 matrix where each row indicates a miRNA probe and each column represents a single sample.
+
+``` {r}
+# Load data 
+load('EVmiRNA.RData')
+
+# Look at top values of data
+head(miRNA)
+
+# Look at top 20 row (aka miRNA) names
+row.names(miRNA)[1:20]
+
+```
+
+We can calculate correlations for any case in which we have paired data. For example, we can look at the correlation between any two miRNAs in our data set between subjects. We can calculate correlations for a data frame using the *cor()* function in R. When you use the *cor()* function, you will need to designate the method you want it to use. For normally distributed data, you will typically see Pearson Correlation Coefficient used for non-normally distributed data, you will typically see  a Spearman correlation coefficient.
+
+The *cor()* function takes the input of a data frame and will calculate the correlation between each column of your data frame. So, if we use our data frame where columns reflect samples, it will tell us the correlation between each sample. 
+
+``` {r}
+#install.packages('corrplot')
+library(corrplot)
+
+# Calculate the spearman correlation coefficient
+corrMatrix <- cor(miRNA,method = 'spearman')
+# Generate a circle-based plot
+corrplot(corrMatrix,method = 'circle')
+# Generate a color-based correlation plot
+corrplot(corrMatrix,method = 'color')
+
+```
+
+We can also produce a plot with the individual correlations included, but it's easier to see this with a smaller plot.
+
+``` {r}
+
+# Generate plot with absolute correlations
+corrplot(corrMatrix[1:5,1:5],method = 'number')
+
+```
+
+If we want to generate the correlations between each miRNA we first need to transpose the matrix (i.e. make the columns the rows and the rows the columns).
+
+``` {r}
+
+# Transpose a subset of the matrix
+t(miRNA[1:5,1:5])
+
+```
+
+Here, we can see our miRNA are now in the columns, so that when we use the *cor()* function it will calculate between-miRNA correlations instead of between sample correlations.
+
+``` {r}
+
+# Calculate correlations
+miRNA.cor <- cor(t(miRNA),method = 'spearman')
+
+# Plot correlations
+corrplot(miRNA.cor[1:10,1:10],method = 'circle')
+
+```
+
+
+### Heat Maps
+
+Heat maps are an easy way to visualize data and look for overall trends when working with highly dimensional data. There are many packages you can use to generate heatmaps but today we're going to work with *pheatmap* which has really easy functionality.
+
+To start, we're going to identify miRNA in our data that have the most variability so that we can have a more interesting heatmap to look at. Variance is just a measure of how much values within a set of numbers differ from the mean. So, the set {3,3.5,4} would have a much lower variance than the set {0,2.5,8} even though they both have the same mean. The formula for variance looks like this:
+
+$$ \sigma^2 = \frac{\displaystyle\sum_{i=1}^{n}(x_i - \mu)^2} {n} $$
+
+In R, we can calculate this using the *var()* function:
+
+```{r}
+
+# Compare sample variances
+var(c(3,3.5,4))
+var(c(0,2.5,8))
+
+```
+
+Notably, standard deviation is just the square root of variance, which we can see easily here.
+
+``` {r}
+
+# Calculate variance
+var(c(0,2.5,8))
+# Calculate the sd squared
+sd(c(0,2.5,8))^2
+
+```
+
+Now, we can use the apply function to calculate these values quickly for all the 798 miRNA in our dataset.
+
+```{r}
+
+# Calculate variance of each miRNA
+variance <- apply(miRNA,MARGIN = 1,FUN = var)
+# Order rows of miRNA so that highest variance in expression is on top
+miRNA2 <- miRNA[order(variance,decreasing = T),]
+
+# Log2-normalize data for plotting
+log2.miRNA <- log2(miRNA2)
+
+```
+
+Now that we have our data ready, we can generate a very simple heatmap. 
+
+``` {r}
+
+#install.packages('pheatmap')
+library(pheatmap)
+
+# Generate heatmap without clustering
+pheatmap(log2.miRNA[700:720,],
+         cluster_rows = F,
+         cluster_cols = F)
+
+```
+
+### Basic Hierarchical Clustering
+
+Clustering is a way of identifying how similar different samples, etc. are from each other in our data. We often add clustering to heat maps to help us visualize how similar vs. dissimilar different rows and columns are from one another. There are lots of different algorithms you can use for clustering but for the sake of this lecture, we're just going to talk about Euclidean distance as that is a common default for heatmaps. The equation for Euclidean distance looks like this:
+
+$$  d\left( p,q\right)   = \sqrt {\sum _{i=1}^{n}  \left( q_{i}-p_{i}\right)^2 }  $$
+
+We can calculate this value between every combination of samples or miRNAs in our data and then create a dendrogram by designating which values are closer to each other, or less close to each other. Every time you assign one set of samples as closer to each other, you will calculate distance again between that now cluster of samples, and all other remaining samples, iteratively until all samples have been linked. Ultimately, the end product looks like this:
+
+
+```{r}
+# Add clusters
+# Note: euclidean is the default so as long as clustering is turned on this is what you will get)
+pheatmap(log2.miRNA[1:20,],
+         clustering_distance_cols = 'euclidean',
+         clustering_distance_rows = 'euclidean')
+```
+
+
+An important thing to remember when ever you're looking at a clustering dendrogram is that not all order matters. Technically, any point it branches off it can pivot on that access so ultimately, Subject10 could end up next to Subject8, Subject21, Subject25, or any of the other members of that cluster. 
+
+Now we can start to see our samples breaking out into 2 primary clusters. We may want to visualize additional things, such as if this clustering pattern is related to a covariate of interest.
+
+``` {r}
+
+# Define covariate for tracking bar
+set.seed(9876)
+annotationData <- data.frame(row.names = colnames(miRNA),
+                             'Status' = c(factor(rbinom(n = 25,size = 1,prob = 0.6),
+                                                 labels = c('Disease X','Healthy'))))
+annotationColors <- list(Status = c('Disease X' = 'aquamarine4',
+                                    'Healthy' = 'deepskyblue4'))
+
+# Generate heatmap
+pheatmap(log2.miRNA[1:20,],
+         clustering_distance_cols = 'euclidean',
+         clustering_distance_rows = 'euclidean',
+         annotation_col = annotationData,
+         annotation_colors = annotationColors)
+```
+
+$~$
+
+### The Gene Expression Omnibus (GEO)
+
+GEO is a public facing repository where people deposit gene expression, methylation, and other molecular datasets to help with research transparency and reproducibility. Importantly, this is a US based repository run by the NIH and there are other such repositories run by different organizations abroad. It is also not used to house genotyping data which is usually instead deposited on dbGaP. 
+
+Datasets on GEO are stored under "GSE" numbers so you can quickly check to see if the paper you're reading has publically available data by simply searching the document for that character string. You can also search more broadly for types of data sets that exist within GEO itself. 
+
+GEO: https://www.ncbi.nlm.nih.gov/geo/ 
+More documentation on GEOquery: https://www.bioconductor.org/packages/release/bioc/vignettes/GEOquery/inst/doc/GEOquery.html 
+Paper for the example: https://pubmed.ncbi.nlm.nih.gov/33096026/ 
+
+
+### Accessing GEO data
+
+To access GEO data directly in R, we are going to use the **GEOquery** package which is part of the bioconductor suite. We will also need the GSE number for the data set. Here, we will use data from the following paper: https://pubmed.ncbi.nlm.nih.gov/33096026/ 
+
+``` {r}
+#source("http://bioconductor.org/biocLite.R")
+#biocLite("GEOquery")
+library(GEOquery)
+
+# If you get an error about insufficient connection buffer, can increasing using the following line
+# Sys.setenv("VROOM_CONNECTION_SIZE" = 131072 * 5)
+gse <- getGEO("GSE157103", GSEMatrix = T,destdir = getwd())
+# Extract at covariate data
+covar <- pData(gse[[1]])
+head(covar)
+
+# Get files for supplementary data
+# You will need to do this to get data for essentially anything that isn't an expression array
+files <- rownames(getGEOSuppFiles('GSE157103'))
+files
+# Download tpm (transcripts per million) file
+RNAseq <- read.delim(files[2],header=TRUE,row.names = 1)
+```
+
+The steps may vary slightly depending upon the platform that the data were originally generated on but generally speaking, you will find most of the genomic data that you're looking for in the supplemental files. 
+
+$~$
+
+
+### In Class Acitivity
+
+1. Write a function to identify the names of the top 20 most abundant RNA transcripts in a matrix. 
+
+2. Clean your covariate data for age, sex, and disease state in the downloaded from GEO so that it's easily plotable. Do a visual inspection of the data to ensure that everything looks okay (ex. histogram, boxplots, tables, etc)
+
+3. Using the  function generated in part 1, identify a list of the top 20 RNA in the GEO dataset. Visually inspect the distribution of these RNA (ex. histograms)
+
+4. Generate a heatmap of the top 20 most variable RNA with tracking bars for age, sex, and disease state. Make sure that your samples and covariates are correctly matched and all your plot labels are clean and publication quality. 

@@ -1,0 +1,432 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Intro to R},
+  pdfauthor={QBS Bootcamp 2025},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Intro to R}
+\author{QBS Bootcamp 2025}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Class Exercises, 1}\label{class-exercises-1}
+
+Please work in groups to solve the problems provided in our very first
+in class assignment. If you complete this early, you are free to leave
+before our class time runs out. If you are unable to complete these
+exercises before the end of class, you can continue at home, though it
+is not required that you do so. These will not be graded!
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Below I have assigned ``things'' to variables. Using code, can you
+  tell me the type of data of each ``thing'' is?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \FloatTok{3.14}
+\NormalTok{b }\OtherTok{\textless{}{-}} \StringTok{"pie"}
+\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{3}
+
+\CommentTok{\# Check the data types}
+\FunctionTok{class}\NormalTok{(a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Create a nested list in the code chunk below. This list should contain
+  one vector of integers, one vector of float numbers, and one vector of
+  strings or characters.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a nested list with different data types}
+\NormalTok{nested\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{integers =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{),}
+    \AttributeTok{floats =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.5}\NormalTok{, }\FloatTok{2.7}\NormalTok{, }\FloatTok{3.14}\NormalTok{, }\FloatTok{4.2}\NormalTok{, }\FloatTok{5.9}\NormalTok{),}
+    \AttributeTok{strings =} \FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{, }\StringTok{"date"}\NormalTok{, }\StringTok{"elderberry"}\NormalTok{)}
+\NormalTok{)}
+
+\CommentTok{\# Display the nested list}
+\NormalTok{nested\_list}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $integers
+## [1] 1 2 3 4 5
+## 
+## $floats
+## [1] 1.50 2.70 3.14 4.20 5.90
+## 
+## $strings
+## [1] "apple"      "banana"     "cherry"     "date"       "elderberry"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  I have provided you with a vector of float numbers. Please convert
+  these float numbers to integers and save the output vector to a vector
+  called ``my\_integers''.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_floats }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{1.67}\NormalTok{, }\FloatTok{1.11}\NormalTok{, }\FloatTok{2.25}\NormalTok{, }\FloatTok{8.88}\NormalTok{, }\FloatTok{6.67}\NormalTok{, }\FloatTok{1048.2}\NormalTok{)}
+
+\CommentTok{\# Convert floats to integers}
+\NormalTok{my\_integers }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(my\_floats)}
+
+\CommentTok{\# Display the result}
+\NormalTok{my\_integers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]    1    1    2    8    6 1048
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  The vector of words was taken from a 2020 Science article about
+  rheumatoid arthritis (RA) associated joint damage. If you are
+  interested in accessing the whole article it can be found
+  \href{https://www.science.org/doi/10.1126/sciadv.abd2688}{here}. Using
+  this vector of words and your recently acquired programming skills,
+  select the word ``rheumatoid'' and print it out.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{arthritis }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Formation"}\NormalTok{, }\StringTok{"of"}\NormalTok{, }\StringTok{"autoantibodies"}\NormalTok{, }\StringTok{"to"}\NormalTok{, }\StringTok{"carbamylated"}\NormalTok{, }\StringTok{"proteins"}\NormalTok{, }\StringTok{"(anti{-}CarP)"}\NormalTok{, }\StringTok{"is"}\NormalTok{, }\StringTok{"considered"}\NormalTok{, }\StringTok{"detrimental"}\NormalTok{, }\StringTok{"in"}\NormalTok{, }\StringTok{"the"}\NormalTok{, }\StringTok{"prognosis"}\NormalTok{, }\StringTok{"of"}\NormalTok{, }\StringTok{"erosive"}\NormalTok{, }\StringTok{"rheumatoid"}\NormalTok{, }\StringTok{"arthritis"}\NormalTok{, }\StringTok{"(RA)."}\NormalTok{, }\StringTok{"The"}\NormalTok{, }\StringTok{"source"}\NormalTok{, }\StringTok{"of"}\NormalTok{, }\StringTok{"carbamylated"}\NormalTok{, }\StringTok{"antigens"}\NormalTok{, }\StringTok{"and"}\NormalTok{, }\StringTok{"the"}\NormalTok{, }\StringTok{"mechanisms"}\NormalTok{, }\StringTok{"by"}\NormalTok{, }\StringTok{"which"}\NormalTok{, }\StringTok{"anti{-}CarP"}\NormalTok{, }\StringTok{"antibodies"}\NormalTok{, }\StringTok{"promote"}\NormalTok{, }\StringTok{"bone"}\NormalTok{, }\StringTok{"erosion"}\NormalTok{, }\StringTok{"in"}\NormalTok{, }\StringTok{"RA"}\NormalTok{, }\StringTok{"remain"}\NormalTok{, }\StringTok{"unknown."}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\StringTok{"Here,"}\NormalTok{, }\StringTok{"we"}\NormalTok{, }\StringTok{"find"}\NormalTok{, }\StringTok{"that"}\NormalTok{, }\StringTok{"neutrophil"}\NormalTok{, }\StringTok{"extracellular"}\NormalTok{, }\StringTok{"traps"}\NormalTok{, }\StringTok{"(NETs)"}\NormalTok{, }\StringTok{"externalize"}\NormalTok{, }\StringTok{"carbamylated"}\NormalTok{, }\StringTok{"proteins"}\NormalTok{, }\StringTok{"and"}\NormalTok{, }\StringTok{"that"}\NormalTok{, }\StringTok{"RA"}\NormalTok{, }\StringTok{"subjects"}\NormalTok{, }\StringTok{"develop"}\NormalTok{, }\StringTok{"autoantibodies"}\NormalTok{, }\StringTok{"against"}\NormalTok{, }\StringTok{"carbamylated"}\NormalTok{, }\StringTok{"NET"}\NormalTok{, }\StringTok{"(cNET)"}\NormalTok{, }\StringTok{"antigens"}\NormalTok{, }\StringTok{"that,"}\NormalTok{, }\StringTok{"in"}\NormalTok{, }\StringTok{"turn,"}\NormalTok{, }\StringTok{"correlate"}\NormalTok{, }\StringTok{"with"}\NormalTok{, }\StringTok{"levels"}\NormalTok{, }\StringTok{"of"}\NormalTok{, }\StringTok{"anti{-}CarP."}\NormalTok{, }\StringTok{"Transgenic"}\NormalTok{, }\StringTok{"mice"}\NormalTok{, }\StringTok{"expressing"}\NormalTok{, }\StringTok{"the"}\NormalTok{, }\StringTok{"human"}\NormalTok{, }\StringTok{"RA"}\NormalTok{, }\StringTok{"shared"}\NormalTok{, }\StringTok{"epitope"}\NormalTok{, }\StringTok{"(HLADRB1*"}\NormalTok{, }\StringTok{"04:01)"}\NormalTok{, }\StringTok{"immunized"}\NormalTok{, }\StringTok{"with"}\NormalTok{, }\StringTok{"cNETs"}\NormalTok{, }\StringTok{"develop"}\NormalTok{, }\StringTok{"antibodies"}\NormalTok{, }\StringTok{"to"}\NormalTok{, }\StringTok{"citrullinated"}\NormalTok{, }\StringTok{"and"}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\StringTok{"carbamylated"}\NormalTok{, }\StringTok{"proteins."}\NormalTok{, }\StringTok{"Furthermore,"}\NormalTok{, }\StringTok{"anti–carbamylated"}\NormalTok{, }\StringTok{"histone"}\NormalTok{, }\StringTok{"antibodies"}\NormalTok{, }\StringTok{"correlate"}\NormalTok{, }\StringTok{"with"}\NormalTok{, }\StringTok{"radiographic"}\NormalTok{, }\StringTok{"bone"}\NormalTok{, }\StringTok{"erosion"}\NormalTok{, }\StringTok{"in"}\NormalTok{, }\StringTok{"RA"}\NormalTok{, }\StringTok{"subjects."}\NormalTok{, }\StringTok{"Moreover,"}\NormalTok{, }\StringTok{"anti–carbamylated"}\NormalTok{, }\StringTok{"histone–immunoglobulin"}\NormalTok{, }\StringTok{"G"}\NormalTok{, }\StringTok{"immune"}\NormalTok{, }\StringTok{"complexes"}\NormalTok{, }\StringTok{"promote"}\NormalTok{, }\StringTok{"osteoclast"}\NormalTok{, }\StringTok{"differentiation"}\NormalTok{, }\StringTok{"and"}\NormalTok{, }\StringTok{"potentiate"}\NormalTok{, }\StringTok{"osteoclast{-}mediated"}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\StringTok{"matrix"}\NormalTok{, }\StringTok{"resorption."}\NormalTok{, }\StringTok{"These"}\NormalTok{, }\StringTok{"results"}\NormalTok{, }\StringTok{"demonstrate"}\NormalTok{, }\StringTok{"that"}\NormalTok{, }\StringTok{"carbamylated"}\NormalTok{, }\StringTok{"proteins"}\NormalTok{, }\StringTok{"present"}\NormalTok{, }\StringTok{"in"}\NormalTok{, }\StringTok{"NETs"}\NormalTok{, }\StringTok{"enhance"}\NormalTok{, }\StringTok{"pathogenic"}\NormalTok{, }\StringTok{"immune"}\NormalTok{, }\StringTok{"responses"}\NormalTok{, }\StringTok{"and"}\NormalTok{, }\StringTok{"bone"}\NormalTok{, }\StringTok{"destruction,"}\NormalTok{, }\StringTok{"which"}\NormalTok{, }\StringTok{"may"}\NormalTok{, }\StringTok{"explain"}\NormalTok{, }\StringTok{"the"}\NormalTok{, }\StringTok{"association"}\NormalTok{, }\StringTok{"between"}\NormalTok{, }\StringTok{"anti{-}CarP"}\NormalTok{, }\StringTok{"and"}\NormalTok{, }\StringTok{"erosive"}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\StringTok{"arthritis"}\NormalTok{, }\StringTok{"in"}\NormalTok{, }\StringTok{"RA."}\NormalTok{)}
+
+\CommentTok{\# Find and print the word "rheumatoid"}
+\NormalTok{rheumatoid\_index }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(arthritis }\SpecialCharTok{==} \StringTok{"rheumatoid"}\NormalTok{)}
+\NormalTok{arthritis[rheumatoid\_index]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "rheumatoid"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  From the vector in the last question, count how many NA's are present.
+  Use coding!
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Count NA values in the arthritis vector}
+\NormalTok{na\_count }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(arthritis))}
+\NormalTok{na\_count}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Count how many numbers in the below vector are less than 10. Use
+  coding!
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{number\_vector }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{29}\NormalTok{, }\DecValTok{48}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{56}\NormalTok{, }\DecValTok{77}\NormalTok{, }\DecValTok{211}\NormalTok{, }\DecValTok{674}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# Count numbers less than 10}
+\NormalTok{less\_than\_10 }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(number\_vector }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{)}
+\NormalTok{less\_than\_10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Count how many times ``a'' is present in the below vector. Use coding!
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{letter\_vector }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"v"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"g"}\NormalTok{, }\StringTok{"f"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"n"}\NormalTok{, }\StringTok{"m"}\NormalTok{, }\StringTok{"q"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"w"}\NormalTok{, }\StringTok{"w"}\NormalTok{, }\StringTok{"i"}\NormalTok{, }\StringTok{"e"}\NormalTok{, }\StringTok{"y"}\NormalTok{)}
+
+\CommentTok{\# Count occurrences of "a"}
+\NormalTok{a\_count }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(letter\_vector }\SpecialCharTok{==} \StringTok{"a"}\NormalTok{)}
+\NormalTok{a\_count}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Count how many number in the below vector are equal to 5 or greater
+  than 5555.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{number\_vector }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{555555}\NormalTok{, }\DecValTok{555}\NormalTok{, }\DecValTok{55555}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{555555555}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{555}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{55555555}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5555}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{555}\NormalTok{, }\DecValTok{5555}\NormalTok{)}
+
+\CommentTok{\# Count numbers equal to 5 or greater than 5555}
+\NormalTok{count\_condition }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(number\_vector }\SpecialCharTok{==} \DecValTok{5} \SpecialCharTok{|}\NormalTok{ number\_vector }\SpecialCharTok{\textgreater{}} \DecValTok{5555}\NormalTok{)}
+\NormalTok{count\_condition}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Make a vector containing any 5 items that you want. These can be of
+  type integer, numeric, or character. Subset your vector to contain
+  only 3 items.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a vector with 5 items}
+\NormalTok{my\_vector }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\DecValTok{42}\NormalTok{, }\FloatTok{3.14}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+
+\CommentTok{\# Subset to contain only 3 items (first 3)}
+\NormalTok{subset\_vector }\OtherTok{\textless{}{-}}\NormalTok{ my\_vector[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\NormalTok{subset\_vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "apple" "42"    "3.14"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  Report the factors of the levels in the below vector.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{smoking\_status }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Never Smoker"}\NormalTok{, }\StringTok{"Current Smoker"}\NormalTok{, }\StringTok{"Former Smoker"}\NormalTok{, }\StringTok{"Former Smoker"}\NormalTok{, }\StringTok{"Never Smoker"}\NormalTok{, }\StringTok{"Never Smoker"}\NormalTok{, }\StringTok{"Never Smoker"}\NormalTok{, }\StringTok{"Current Smoker"}\NormalTok{, }\StringTok{"Former Smoker"}\NormalTok{, }\StringTok{"Former Smoker"}\NormalTok{)}
+
+\CommentTok{\# Convert to factor and get levels}
+\NormalTok{smoking\_factor }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(smoking\_status)}
+\FunctionTok{levels}\NormalTok{(smoking\_factor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Current Smoker" "Former Smoker"  "Never Smoker"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{10}
+\tightlist
+\item
+  Below I have supplied you with a list of vectors containing the names
+  of foods. Add logical names to each of the vectors in the list (eg.
+  ``Meats'',``Veggies'', ``Grains'',``Fruit''). Access the second vector
+  in the lists. Return the type of items in this vector.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grocery\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \FunctionTok{c}\NormalTok{(}\StringTok{"Peaches"}\NormalTok{, }\StringTok{"Bananas"}\NormalTok{, }\StringTok{"Strawberries"}\NormalTok{, }\StringTok{"Melon"}\NormalTok{),}
+    \FunctionTok{c}\NormalTok{(}\StringTok{"Spinach"}\NormalTok{, }\StringTok{"Lettuce"}\NormalTok{, }\StringTok{"Carrot"}\NormalTok{, }\StringTok{"Kale"}\NormalTok{),}
+    \FunctionTok{c}\NormalTok{(}\StringTok{"Oreos"}\NormalTok{, }\StringTok{"Chocolate Cake"}\NormalTok{, }\StringTok{"Gummy Bears"}\NormalTok{, }\StringTok{"Marshmellows"}\NormalTok{)}
+\NormalTok{)}
+
+\CommentTok{\# Add names to the list}
+\FunctionTok{names}\NormalTok{(grocery\_list) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Fruits"}\NormalTok{, }\StringTok{"Vegetables"}\NormalTok{, }\StringTok{"Sweets"}\NormalTok{)}
+
+\CommentTok{\# Access the second vector (Vegetables)}
+\NormalTok{second\_vector }\OtherTok{\textless{}{-}}\NormalTok{ grocery\_list[[}\DecValTok{2}\NormalTok{]]}
+\NormalTok{second\_vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Spinach" "Lettuce" "Carrot"  "Kale"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check the type of items in the second vector}
+\FunctionTok{class}\NormalTok{(second\_vector)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\end{document}
